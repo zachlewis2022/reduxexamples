@@ -1,5 +1,5 @@
 import React from "react";
-import { DataState, updateData } from "./ReduxSlice";
+import { updateData } from "./ReduxSlice";
 import { ConnectedProps, connect } from "react-redux";
 import { RootState } from "./store";
 
@@ -13,7 +13,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
     data: any; 
   };
 
-  class ClassDemo extends React.Component< PropsFromRedux, MyState> {
+  class ClassDemo extends React.Component< PropsFromRedux, MyState, myprops> {
     state: MyState = {
       // optional second annotation for better type inference
       dataIn: "newstuff",
@@ -25,19 +25,21 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
       
     render() {
-        const { value, updateData } = this.props;
-        this.handleUpdate(this.state.dataIn)
+        const { value, props } = this.props;
+        console.log()
+        this.handleUpdate(props.props)
 
         return (
         <div>
-          {value} from {this.state.dataIn}
+         {value} from {this.state.dataIn}
         </div>
       );
     }
   }
 
-  const mapStateToProps = (state: RootState) => ({
+  const mapStateToProps = (state: RootState, props: any) => ({
     value: state.value,
+    props: props
   });
   
   const mapDispatchToProps = {
